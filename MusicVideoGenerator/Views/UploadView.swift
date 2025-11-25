@@ -82,7 +82,6 @@ struct DocumentPicker: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [
             UTType.audio,
-            UTType.mp3,
             UTType.mpeg4Audio
         ])
         picker.delegate = context.coordinator
