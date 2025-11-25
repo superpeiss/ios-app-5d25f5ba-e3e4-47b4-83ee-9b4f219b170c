@@ -1,0 +1,53 @@
+name: iOS Build
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install XcodeGen
+        run: |
+          brew install xcodegen
+
+      - name: Generate Xcode project
+        run: |
+          cd MusicVideoGenerator
+          xcodegen generate
+
+      - name: Build iOS app
+        run: |
+          cd MusicVideoGenerator
+          xcodebuild -scheme MusicVideoGenerator \
+            -destination 'generic/platform=iOS' \
+            clean build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            | tee ../build.log
+
+      - name: Check build result
+        run: |
+          if grep -q "BUILD SUCCEEDED" build.log; then
+            echo "✅ Build succeeded!"
+            exit 0
+          else
+            echo "❌ Build failed!"
+            exit 1
+          fi
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log

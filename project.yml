@@ -1,0 +1,47 @@
+name: MusicVideoGenerator
+
+options:
+  bundleIdPrefix: com.musicvideogen
+  deploymentTarget:
+    iOS: "15.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+
+settings:
+  base:
+    PRODUCT_NAME: MusicVideoGenerator
+    SWIFT_VERSION: "5.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "15.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    INFOPLIST_FILE: MusicVideoGenerator/Info.plist
+
+targets:
+  MusicVideoGenerator:
+    type: application
+    platform: iOS
+    sources:
+      - MusicVideoGenerator
+    settings:
+      base:
+        INFOPLIST_FILE: MusicVideoGenerator/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.musicvideogen.MusicVideoGenerator
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    dependencies:
+      - sdk: AVFoundation.framework
+      - sdk: Speech.framework
+      - sdk: NaturalLanguage.framework
+      - sdk: CoreML.framework
+      - sdk: Photos.framework
+      - sdk: PhotosUI.framework
+      - sdk: UIKit.framework
+
+schemes:
+  MusicVideoGenerator:
+    build:
+      targets:
+        MusicVideoGenerator: all
+    run:
+      config: Debug
+    archive:
+      config: Release
