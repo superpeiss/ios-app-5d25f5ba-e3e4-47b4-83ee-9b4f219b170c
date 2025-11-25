@@ -88,10 +88,8 @@ class VideoCompositionService {
 
                 videoComposition.instructions = [instruction]
 
-                // Apply color grading filter
-                if project.colorGrading.preset != .none {
-                    videoComposition.colorTransfer = self.getColorTransfer(for: project.colorGrading)
-                }
+                // Note: Color grading would be applied through CIFilters
+                // using a custom video compositor class in a production app
 
                 DispatchQueue.main.async {
                     progress(0.8) // 80% done

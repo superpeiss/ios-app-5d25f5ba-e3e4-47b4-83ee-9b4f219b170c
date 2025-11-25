@@ -29,7 +29,7 @@ class MediaFetchingService {
             switch result {
             case .success(let clips):
                 completion(.success(clips))
-            case .failure(let error):
+            case .failure(_):
                 // Fallback to placeholder videos if fetch fails
                 let placeholderClips = self.createPlaceholderClips(count: numberOfClips, duration: duration)
                 completion(.success(placeholderClips))
